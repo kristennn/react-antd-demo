@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import {
   DesktopOutlined,
@@ -8,6 +8,10 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import './index.css';
+import Dashboard from '../pages/dashboard';
+import Category from '../pages/category';
+import Product from '../pages/product';
+
 const { Sider, Header, Content, Footer } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -25,15 +29,79 @@ function getItem(
   } as MenuItem;
 }
 
-const items = [
-  getItem('首页', 'dashboard', <DesktopOutlined />),
-  getItem('品类管理', 'category', <PartitionOutlined />, [
-    getItem('品类列表', 'categoryList'),
-  ]),
-  getItem('产品管理', 'product', <GiftOutlined />, [
-    getItem('产品列表', 'productList'),
-  ]),
+// const items = [
+//   getItem('首页', 'dashboard', <DesktopOutlined />),
+//   getItem('品类管理', 'category', <PartitionOutlined />, [
+//     getItem('品类列表', 'categoryList'),
+//   ]),
+//   getItem('产品管理', 'product', <GiftOutlined />, [
+//     getItem('产品列表', 'productList'),
+//   ]),
+// ];
+type MenuItemConfig = {
+  label: React.ReactNode;
+  key: React.Key;
+  icon?: React.ReactNode;
+  url: string;
+  children?: MenuItemConfig[];
+};
+const items: MenuItemConfig[] = [
+  { label: '首页', key: 'dashboard', icon: <DesktopOutlined />, url: '/' },
+  {
+    label: '品类管理',
+    key: 'category',
+    url: '/category',
+    icon: <PartitionOutlined />,
+    children: [
+      {
+        label: '品类列表',
+        key: 'categoryList',
+        url: '/category',
+      },
+    ],
+  },
+  {
+    label: '产品管理',
+    key: 'product',
+    icon: <GiftOutlined />,
+    url: '/product',
+    children: [
+      {
+        label: '产品列表',
+        key: 'productList',
+        url: '/product',
+      },
+    ],
+  },
 ];
+
+const renderMenu = (items: MenuItemConfig[]) => {
+  return items.map((menuItem: MenuItemConfig) => {
+    if (menuItem.children && menuItem.children.length) {
+      return (
+        <Menu.SubMenu title={menuItem.label}>
+          {menuItem.children.map((child: MenuItemConfig) => {
+            return (
+              <Menu.Item key={child.key}>
+                {child.icon}
+                <span>{child.label}</span>
+                <Link to={child.url} />
+              </Menu.Item>
+            );
+          })}
+        </Menu.SubMenu>
+      );
+    } else {
+      return (
+        <Menu.Item key={menuItem.key}>
+          {menuItem.icon}
+          <span>{menuItem.label}</span>
+          <Link to={menuItem.url} />
+        </Menu.Item>
+      );
+    }
+  });
+};
 
 const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -47,12 +115,9 @@ const AppLayout: React.FC = () => {
           onCollapse={(value) => setCollapsed(value)}
         >
           <img className='logo' src={require('../assets/img/logo.png')} />
-          <Menu
-            theme='dark'
-            defaultSelectedKeys={['1']}
-            mode='inline'
-            items={items}
-          />
+          <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
+            {renderMenu(items)}
+          </Menu>
         </Sider>
         <Layout className='site-layout'>
           <Header className='site-layout-background' style={{ padding: 0 }} />
@@ -65,7 +130,11 @@ const AppLayout: React.FC = () => {
               className='site-layout-background'
               style={{ padding: 24, minHeight: 360 }}
             >
-              Sister is a cat
+              <Routes>
+                <Route path='/' element={<Dashboard />} />
+                <Route path='/category' element={<Category />} />
+                <Route path='/product' element={<Product />} />
+              </Routes>
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
