@@ -1,5 +1,6 @@
-import { Breadcrumb, Layout, Menu } from 'antd';
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Breadcrumb, Layout, Menu } from 'antd';
 import {
   DesktopOutlined,
   PartitionOutlined,
@@ -37,40 +38,42 @@ const items = [
 const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider
-        id='lu-layout-side'
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-      >
-        <img className='logo' src={require('../assets/img/logo.png')} />
-        <Menu
-          theme='dark'
-          defaultSelectedKeys={['1']}
-          mode='inline'
-          items={items}
-        />
-      </Sider>
-      <Layout className='site-layout'>
-        <Header className='site-layout-background' style={{ padding: 0 }} />
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            className='site-layout-background'
-            style={{ padding: 24, minHeight: 360 }}
-          >
-            Sister is a cat
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          LuJunYao CMS @2022 Created by Kristen
-        </Footer>
+    <Router>
+      <Layout style={{ minHeight: '100vh' }}>
+        <Sider
+          id='lu-layout-side'
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+        >
+          <img className='logo' src={require('../assets/img/logo.png')} />
+          <Menu
+            theme='dark'
+            defaultSelectedKeys={['1']}
+            mode='inline'
+            items={items}
+          />
+        </Sider>
+        <Layout className='site-layout'>
+          <Header className='site-layout-background' style={{ padding: 0 }} />
+          <Content style={{ margin: '0 16px' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+              <Breadcrumb.Item>User</Breadcrumb.Item>
+              <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            </Breadcrumb>
+            <div
+              className='site-layout-background'
+              style={{ padding: 24, minHeight: 360 }}
+            >
+              Sister is a cat
+            </div>
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>
+            LuJunYao CMS @2022 Created by Kristen
+          </Footer>
+        </Layout>
       </Layout>
-    </Layout>
+    </Router>
   );
 };
 
