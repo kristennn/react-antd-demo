@@ -1,0 +1,9 @@
+#lu-layout-side .logo {
+  width: 80%;
+  margin: 6px 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
