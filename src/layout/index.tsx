@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import {
   DesktopOutlined,
@@ -11,6 +11,7 @@ import './index.css';
 import Dashboard from '../pages/dashboard';
 import Category from '../pages/category';
 import Product from '../pages/product';
+import Login from '../pages/login';
 
 const { Sider, Header, Content, Footer } = Layout;
 
@@ -29,15 +30,6 @@ function getItem(
   } as MenuItem;
 }
 
-// const items = [
-//   getItem('首页', 'dashboard', <DesktopOutlined />),
-//   getItem('品类管理', 'category', <PartitionOutlined />, [
-//     getItem('品类列表', 'categoryList'),
-//   ]),
-//   getItem('产品管理', 'product', <GiftOutlined />, [
-//     getItem('产品列表', 'productList'),
-//   ]),
-// ];
 type MenuItemConfig = {
   label: React.ReactNode;
   key: React.Key;
@@ -79,7 +71,7 @@ const renderMenu = (items: MenuItemConfig[]) => {
   return items.map((menuItem: MenuItemConfig) => {
     if (menuItem.children && menuItem.children.length) {
       return (
-        <Menu.SubMenu title={menuItem.label}>
+        <Menu.SubMenu title={menuItem.label} icon={menuItem.icon}>
           {menuItem.children.map((child: MenuItemConfig) => {
             return (
               <Menu.Item key={child.key}>
@@ -106,43 +98,44 @@ const renderMenu = (items: MenuItemConfig[]) => {
 const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Router>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider
-          id='lu-layout-side'
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-        >
-          <img className='logo' src={require('../assets/img/logo.png')} />
-          <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
-            {renderMenu(items)}
-          </Menu>
-        </Sider>
-        <Layout className='site-layout'>
-          <Header className='site-layout-background' style={{ padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Routes>
+        <Route path='/login' element={<Login />} />
+      </Routes>
+      <Sider
+        id='lu-layout-side'
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+      >
+        <img className='logo' src={require('../assets/img/logo.png')} />
+        <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
+          {renderMenu(items)}
+        </Menu>
+      </Sider>
+      <Layout className='site-layout'>
+        <Header className='site-layout-background' style={{ padding: 0 }} />
+        <Content style={{ margin: '0 16px' }}>
+          {/* <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
-            <div
-              className='site-layout-background'
-              style={{ padding: 24, minHeight: 360 }}
-            >
-              <Routes>
-                <Route path='/' element={<Dashboard />} />
-                <Route path='/category' element={<Category />} />
-                <Route path='/product' element={<Product />} />
-              </Routes>
-            </div>
-          </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            LuJunYao CMS @2022 Created by Kristen
-          </Footer>
-        </Layout>
+            </Breadcrumb> */}
+          <div
+            className='site-layout-background'
+            style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
+          >
+            <Routes>
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/category' element={<Category />} />
+              <Route path='/product' element={<Product />} />
+            </Routes>
+          </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>
+          LuJunYao CMS @2022 Created by Kristen
+        </Footer>
       </Layout>
-    </Router>
+    </Layout>
   );
 };
 

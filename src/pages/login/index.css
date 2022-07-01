@@ -1,0 +1,56 @@
+.lu-login-bg {
+  position: relative;
+}
+
+.lu-login-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #070707;
+  opacity: 0.1;
+  z-index: 10;
+  min-height: 100vh;
+}
+
+.lu-login-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.lu-login-logo {
+  width: 150px;
+  border-radius: 6px;
+  margin-bottom: 80px;
+}
+
+.lu-login-cont {
+  z-index: 20;
+  background: #fff;
+  width: 400px;
+  height: 460px;
+  position: absolute;
+  top: 100px;
+  left: calc(50% - 200px);
+  padding: 20px;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.lu-login-input {
+  width: 300px;
+  height: 40px;
+}
+
+.lu-login-btn {
+  width: 300px;
+  height: 38px;
+  border-radius: 6px;
+  margin-top: 16px;
+}
