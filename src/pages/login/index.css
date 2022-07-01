@@ -2,21 +2,7 @@
   position: relative;
 }
 
-.lu-login-cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #070707;
-  opacity: 0.1;
-  z-index: 10;
-  min-height: 100vh;
-}
-
 .lu-login-bg-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
   width: 100%;
 }
 
@@ -27,7 +13,6 @@
 }
 
 .lu-login-cont {
-  z-index: 20;
   background: #fff;
   width: 400px;
   height: 460px;
