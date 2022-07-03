@@ -5,19 +5,27 @@ import { Button, Checkbox, Form, Input } from 'antd';
  * @Author: KristenZheng kristen@electracharger.com
  * @Date: 2022-06-29 10:12:54
  * @LastEditors: KristenZheng kristen@electracharger.com
- * @LastEditTime: 2022-07-01 18:39:44
+ * @LastEditTime: 2022-07-03 11:22:22
  * @FilePath: /demo/src/pages/login/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import React, { useState } from 'react';
 
-const Login: React.FC = () => {
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [checked, toggleChecked] = useState(false);
-  const onFinish = (val: any) => {};
-  const onFinishFailed = (val: any) => {};
-  const handleLogin = () => {};
+type loginFrom = {
+  username: string;
+  password: string;
+};
+
+const Login: React.FC = (props) => {
+  const [form] = Form.useForm();
+  const handleLogin = () => {
+    form.validateFields().then((values: loginFrom[]) => {
+      doLogin(values);
+    });
+  };
+  const doLogin = (values: loginFrom[]) => {
+    console.log('do ajax thing');
+  };
   return (
     <div className='lu-login-bg'>
       <div className='lu-login-cover'></div>
@@ -29,22 +37,17 @@ const Login: React.FC = () => {
         />
         <Form
           name='basic'
+          form={form}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete='off'
         >
           <Form.Item
             name='username'
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
-            <Input
-              className='lu-login-input'
-              placeholder='请输入用户名'
-              value={userName}
-            />
+            <Input className='lu-login-input' placeholder='请输入用户名' />
           </Form.Item>
           <Form.Item
             name='password'
@@ -53,16 +56,8 @@ const Login: React.FC = () => {
             <Input.Password
               className='lu-login-input'
               placeholder='请输入密码'
-              value={password}
             />
           </Form.Item>
-          {/* <Form.Item
-            name='remember'
-            valuePropName='checked'
-            wrapperCol={{ offset: 8, span: 16 }}
-          >
-            <Checkbox value={checked}>Remember me</Checkbox>
-          </Form.Item> */}
         </Form>
         <Button className='lu-login-btn' type='primary' onClick={handleLogin}>
           登录
