@@ -20,10 +20,8 @@ const Login: React.FC = () => {
   const handleLogin = () => {};
   return (
     <div className='lu-login-bg'>
-      <img
-        className='lu-login-bg-img'
-        src={require('../../assets/img/bg.jpg')}
-      />
+      <div className='lu-login-cover'></div>
+      <div className='lu-login-bg-img' />
       <div className='lu-login-cont'>
         <img
           className='lu-login-logo'
