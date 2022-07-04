@@ -8,10 +8,8 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import './index.css';
-import Dashboard from '../pages/dashboard';
 import Category from '../pages/category';
 import Product from '../pages/product';
-import Login from '../pages/login';
 
 const { Sider, Header, Content, Footer } = Layout;
 
