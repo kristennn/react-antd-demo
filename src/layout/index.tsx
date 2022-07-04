@@ -71,7 +71,11 @@ const renderMenu = (items: MenuItemConfig[]) => {
   return items.map((menuItem: MenuItemConfig) => {
     if (menuItem.children && menuItem.children.length) {
       return (
-        <Menu.SubMenu title={menuItem.label} icon={menuItem.icon}>
+        <Menu.SubMenu
+          title={menuItem.label}
+          icon={menuItem.icon}
+          key={menuItem.key}
+        >
           {menuItem.children.map((child: MenuItemConfig) => {
             return (
               <Menu.Item key={child.key}>
@@ -99,9 +103,6 @@ const AppLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-      </Routes>
       <Sider
         id='lu-layout-side'
         collapsible
@@ -116,16 +117,11 @@ const AppLayout: React.FC = () => {
       <Layout className='site-layout'>
         <Header className='site-layout-background' style={{ padding: 0 }} />
         <Content style={{ margin: '0 16px' }}>
-          {/* <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb> */}
           <div
             className='site-layout-background'
             style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
           >
             <Routes>
-              <Route path='/' element={<Dashboard />} />
               <Route path='/category' element={<Category />} />
               <Route path='/product' element={<Product />} />
             </Routes>
