@@ -1,29 +1,22 @@
-import { ColumnsType } from 'antd/lib/table';
 /*
  * @Author: KristenZheng kristen@electracharger.com
  * @Date: 2022-06-29 17:08:01
  * @LastEditors: kristennn 13949836783@163.com
- * @LastEditTime: 2022-07-05 13:48:46
+ * @LastEditTime: 2022-07-05 16:55:25
  * @FilePath: /demo/src/pages/dashboard/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { Table } from 'antd';
+import { Button, Space, Table } from 'antd';
 
-interface DataType {
-  key: number;
-  code: string;
-  createdAt: string;
-  glaze: string;
-  id: number;
-  imgUrl: string;
-  name: string;
-  remark: string;
-  series: string;
-  size: string;
-  type: string;
-}
+import { CategoryType } from '../../api/category';
+import { ColumnsType } from 'antd/lib/table';
 
-const columns: ColumnsType<DataType> = [
+const handleCreate = () => {};
+const handleEdit = (item: CategoryType) => {};
+const handleGenerate = (item: CategoryType) => {};
+const handleDelete = (item: CategoryType) => {};
+
+const columns: ColumnsType<CategoryType> = [
   {
     title: '名称',
     dataIndex: 'name',
@@ -64,14 +57,26 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'createdAt',
     key: 'createdAt',
   },
-  // {
-  //   title: '操作',
-  //   dataIndex: 'name',
-  //   key: 'name',
-  // },
+  {
+    title: '操作',
+    key: 'operate',
+    render: (_, record) => (
+      <Space size='middle'>
+        <Button onClick={() => handleEdit(record)} type='primary'>
+          编辑
+        </Button>
+        <Button onClick={() => handleGenerate(record)} type='primary'>
+          生成产品
+        </Button>
+        <Button onClick={() => handleDelete(record)} danger type='primary'>
+          删除
+        </Button>
+      </Space>
+    ),
+  },
 ];
 
-const data: DataType[] = [
+const data: CategoryType[] = [
   {
     key: 2,
     code: 'YBXQ003',
@@ -90,6 +95,13 @@ const data: DataType[] = [
 const renderTable = () => <Table columns={columns} dataSource={data} />;
 
 const Category = () => {
-  return <div>{renderTable()}</div>;
+  return (
+    <div>
+      <Button onClick={handleCreate} type='primary'>
+        +新建
+      </Button>
+      {renderTable()}
+    </div>
+  );
 };
 export default Category;
