@@ -2,105 +2,38 @@
  * @Author: KristenZheng kristen@electracharger.com
  * @Date: 2022-06-29 17:08:01
  * @LastEditors: kristennn 13949836783@163.com
- * @LastEditTime: 2022-07-05 16:55:25
+ * @LastEditTime: 2022-07-05 17:10:56
  * @FilePath: /demo/src/pages/dashboard/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { Button, Space, Table } from 'antd';
+import { Button, Modal } from 'antd';
 
-import { CategoryType } from '../../api/category';
-import { ColumnsType } from 'antd/lib/table';
-
-const handleCreate = () => {};
-const handleEdit = (item: CategoryType) => {};
-const handleGenerate = (item: CategoryType) => {};
-const handleDelete = (item: CategoryType) => {};
-
-const columns: ColumnsType<CategoryType> = [
-  {
-    title: '名称',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '编号',
-    dataIndex: 'code',
-    key: 'code',
-  },
-  {
-    title: '釉色',
-    dataIndex: 'glaze',
-    key: 'glaze',
-  },
-  {
-    title: '品类',
-    dataIndex: 'type',
-    key: 'type',
-  },
-  {
-    title: '系列',
-    dataIndex: 'series',
-    key: 'series',
-  },
-  {
-    title: '尺寸',
-    dataIndex: 'size',
-    key: 'size',
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
-    key: 'remark',
-  },
-  {
-    title: '创建日期',
-    dataIndex: 'createdAt',
-    key: 'createdAt',
-  },
-  {
-    title: '操作',
-    key: 'operate',
-    render: (_, record) => (
-      <Space size='middle'>
-        <Button onClick={() => handleEdit(record)} type='primary'>
-          编辑
-        </Button>
-        <Button onClick={() => handleGenerate(record)} type='primary'>
-          生成产品
-        </Button>
-        <Button onClick={() => handleDelete(record)} danger type='primary'>
-          删除
-        </Button>
-      </Space>
-    ),
-  },
-];
-
-const data: CategoryType[] = [
-  {
-    key: 2,
-    code: 'YBXQ003',
-    createdAt: '2022-03-24T07:59:35.000Z',
-    glaze: 'YB',
-    id: 2,
-    imgUrl: '',
-    name: '测试数据1',
-    remark: '',
-    series: '003',
-    size: '8',
-    type: 'XQ',
-  },
-];
-
-const renderTable = () => <Table columns={columns} dataSource={data} />;
+import CategoryTable from './table';
+import { useState } from 'react';
 
 const Category = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleCreate = () => {
+    showModal();
+  };
+  const showModal = () => setIsModalVisible(true);
+  const handleSubmit = () => setIsModalVisible(false);
+  const handleCancel = () => setIsModalVisible(false);
   return (
     <div>
       <Button onClick={handleCreate} type='primary'>
         +新建
       </Button>
-      {renderTable()}
+      <CategoryTable />
+      <Modal
+        title='Basic Modal'
+        visible={isModalVisible}
+        onOk={handleSubmit}
+        onCancel={handleCancel}
+      >
+        <p>test</p>
+      </Modal>
     </div>
   );
 };
