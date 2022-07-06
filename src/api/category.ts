@@ -8,7 +8,7 @@
  */
 import { http } from '../utils/request';
 
-export type CategoryType = {
+export type Category = {
   key: number;
   code: string;
   createdAt: string;
@@ -20,4 +20,20 @@ export type CategoryType = {
   series: string;
   size: string;
   type: string;
+};
+
+export const fetchCategories = async (): Promise<Category[]> => {
+  return await http.get('/categories');
+};
+
+export const createCategory = async (category: Category): Promise<Category> => {
+  return await http.post('/categories', category);
+};
+
+export const updateCategory = async (category: Category): Promise<Category> => {
+  return await http.put(`/categories/${category.id}`, category);
+};
+
+export const deleteCategory = async (category: Category): Promise<Category> => {
+  return await http.delete(`/categories/${category.id}`);
 };

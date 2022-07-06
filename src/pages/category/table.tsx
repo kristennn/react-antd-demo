@@ -8,14 +8,14 @@
  */
 import { Button, Space, Table } from 'antd';
 
-import { CategoryType } from '../../api/category';
+import { Category } from '../../api/category';
 import { ColumnsType } from 'antd/lib/table';
 
-const handleEdit = (item: CategoryType) => {};
-const handleGenerate = (item: CategoryType) => {};
-const handleDelete = (item: CategoryType) => {};
+const handleEdit = (item: Category) => {};
+const handleGenerate = (item: Category) => {};
+const handleDelete = (item: Category) => {};
 
-const columns: ColumnsType<CategoryType> = [
+const columns: ColumnsType<Category> = [
   {
     title: '名称',
     dataIndex: 'name',
@@ -75,7 +75,7 @@ const columns: ColumnsType<CategoryType> = [
   },
 ];
 
-const data: CategoryType[] = [
+const data: Category[] = [
   {
     key: 2,
     code: 'YBXQ003',

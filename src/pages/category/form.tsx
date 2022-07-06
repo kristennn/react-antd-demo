@@ -6,6 +6,8 @@ import {
   typeOptions,
 } from '../../utils/options';
 
+import { createCategory } from '../../api/category';
+
 /*
  * @Author: kristennn 13949836783@163.com
  * @Date: 2022-07-05 17:12:14
@@ -26,7 +28,9 @@ const CategoryForm = (props: CategoryFormProps) => {
   const { title, isVisible, handleSubmitted, handleCancel } = props;
   const [form] = Form.useForm();
   const handleSubmit = () => {
-    // 处理数据
+    form.validateFields().then((values) => {
+      createCategory(values);
+    });
     handleSubmitted();
   };
   const handleRadioChange = (label: string, e: RadioChangeEvent) => {
@@ -71,6 +75,7 @@ const CategoryForm = (props: CategoryFormProps) => {
           wrapperCol={{ span: 12 }}
           label='釉色'
           name='glaze'
+          rules={[{ required: true, message: '请选择釉色' }]}
         >
           <Radio.Group
             options={glazeOptions}
@@ -84,6 +89,7 @@ const CategoryForm = (props: CategoryFormProps) => {
           wrapperCol={{ span: 12 }}
           label='品类'
           name='type'
+          rules={[{ required: true, message: '请选择品类' }]}
         >
           <Radio.Group
             options={typeOptions}
@@ -97,6 +103,7 @@ const CategoryForm = (props: CategoryFormProps) => {
           wrapperCol={{ span: 12 }}
           label='系列'
           name='series'
+          rules={[{ required: true, message: '请选择系列' }]}
         >
           <Radio.Group
             options={seriesOptions}
@@ -110,6 +117,7 @@ const CategoryForm = (props: CategoryFormProps) => {
           wrapperCol={{ span: 12 }}
           label='尺寸'
           name='size'
+          rules={[{ required: true, message: '请选择尺寸' }]}
         >
           <Radio.Group
             options={sizeOptions}
