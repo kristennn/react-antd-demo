@@ -9,10 +9,12 @@
 import { Button } from 'antd';
 import CategoryForm from './form';
 import CategoryTable from './table';
+import { Category as CategoryType } from '../../api/category';
 import { useState } from 'react';
 
 const Category = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currId, setCurrId] = useState<number | undefined | null>(null);
   const handleCreate = () => {
     setIsModalVisible(true);
   };
@@ -22,18 +24,30 @@ const Category = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  const handleEdit = (item: CategoryType) => {
+    setCurrId(item.id);
+    console.log(currId);
+    setIsModalVisible(true);
+    console.log('open');
+  };
+  const handleDelete = (item: CategoryType) => {};
+  const handleGenerate = (item: CategoryType) => {};
 
   return (
     <div>
       <Button onClick={handleCreate} type='primary'>
         +新建
       </Button>
-      <CategoryTable />
+      <CategoryTable
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+        handleGenerate={handleGenerate}
+      />
       <CategoryForm
         isVisible={isModalVisible}
         handleSubmitted={handleSubmitted}
         handleCancel={handleCancel}
-        title='新增品类'
+        id={currId}
       />
     </div>
   );

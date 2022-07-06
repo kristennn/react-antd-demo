@@ -1,3 +1,9 @@
+import {
+  Category,
+  createCategory,
+  getCategory,
+  updateCategory,
+} from '../../api/category';
 import { Form, Input, Modal, Radio, RadioChangeEvent } from 'antd';
 import {
   glazeOptions,
@@ -5,8 +11,7 @@ import {
   sizeOptions,
   typeOptions,
 } from '../../utils/options';
-
-import { createCategory } from '../../api/category';
+import { useEffect, useState } from 'react';
 
 /*
  * @Author: kristennn 13949836783@163.com
@@ -18,20 +23,30 @@ import { createCategory } from '../../api/category';
  */
 
 type CategoryFormProps = {
-  title: string;
+  id: number | undefined | null;
   isVisible: boolean;
   handleSubmitted: () => void;
   handleCancel: () => void;
 };
 
 const CategoryForm = (props: CategoryFormProps) => {
-  const { title, isVisible, handleSubmitted, handleCancel } = props;
+  const { id, isVisible, handleSubmitted, handleCancel } = props;
+  const [initialFormValues, setInitialFormValues] = useState<{} | Category>({});
   const [form] = Form.useForm();
+  useEffect(() => {
+    if (id) {
+      getCategory(id).then((res) => {
+        // 将返回的对象赋值给form
+        // setInitialFormValues(res.data);
+      });
+    }
+  }, []);
+
   const handleSubmit = () => {
     form.validateFields().then((values) => {
-      createCategory(values);
+      id ? updateCategory(values) : createCategory(values);
     });
-    handleSubmitted();
+    // handleSubmitted();
   };
   const handleRadioChange = (label: string, e: RadioChangeEvent) => {
     const formData = form.getFieldsValue();
@@ -45,14 +60,14 @@ const CategoryForm = (props: CategoryFormProps) => {
   };
   return (
     <Modal
-      title={title}
+      title={id ? '编辑品类' : '新增品类'}
       width={700}
       maskClosable={false}
       visible={isVisible}
       onOk={handleSubmit}
       onCancel={handleCancel}
     >
-      <Form layout='horizontal' form={form}>
+      <Form layout='horizontal' form={form} initialValues={initialFormValues}>
         <Form.Item
           labelCol={{ span: 7 }}
           wrapperCol={{ span: 12 }}

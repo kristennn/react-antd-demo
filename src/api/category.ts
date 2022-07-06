@@ -13,7 +13,7 @@ export type Category = {
   code: string;
   createdAt: string;
   glaze: string;
-  id: number;
+  id?: number;
   imgUrl: string;
   name: string;
   remark: string;
@@ -24,6 +24,10 @@ export type Category = {
 
 export const fetchCategories = async (): Promise<Category[]> => {
   return await http.get('/categories');
+};
+
+export const getCategory = async (id: number): Promise<Category[]> => {
+  return await http.get(`/categories/${id}`);
 };
 
 export const createCategory = async (category: Category): Promise<Category> => {
