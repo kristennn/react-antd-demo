@@ -1,33 +1,132 @@
+import { Form, Input, Modal, Radio, RadioChangeEvent } from 'antd';
+import {
+  glazeOptions,
+  seriesOptions,
+  sizeOptions,
+  typeOptions,
+} from '../../utils/options';
+
 /*
  * @Author: kristennn 13949836783@163.com
  * @Date: 2022-07-05 17:12:14
  * @LastEditors: kristennn 13949836783@163.com
- * @LastEditTime: 2022-07-06 15:43:31
+ * @LastEditTime: 2022-07-06 16:35:34
  * @FilePath: /demo/src/pages/category/Form.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { Modal } from 'antd';
 
 type CategoryFormProps = {
+  title: string;
   isVisible: boolean;
   handleSubmitted: () => void;
   handleCancel: () => void;
 };
 
 const CategoryForm = (props: CategoryFormProps) => {
-  const { isVisible, handleSubmitted, handleCancel } = props;
+  const { title, isVisible, handleSubmitted, handleCancel } = props;
+  const [form] = Form.useForm();
   const handleSubmit = () => {
     // 处理数据
     handleSubmitted();
   };
+  const handleRadioChange = (label: string, e: RadioChangeEvent) => {
+    const formData = form.getFieldsValue();
+    formData[label] = e.target.value;
+    form.setFieldsValue({
+      code:
+        (formData.glaze || '') +
+        (formData.type || '') +
+        (formData.series || ''),
+    });
+  };
   return (
     <Modal
-      title='Basic Modal'
+      title={title}
+      width={700}
+      maskClosable={false}
       visible={isVisible}
       onOk={handleSubmit}
       onCancel={handleCancel}
     >
-      <p>test</p>
+      <Form layout='horizontal' form={form}>
+        <Form.Item
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 12 }}
+          label='品类名称'
+          name='name'
+          rules={[{ required: true, message: '请输入品类名称' }]}
+        >
+          <Input placeholder='请输入品类名称' />
+        </Form.Item>
+        <Form.Item
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 12 }}
+          label='品类编号'
+          name='code'
+        >
+          <Input disabled />
+        </Form.Item>
+        <Form.Item
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 12 }}
+          label='釉色'
+          name='glaze'
+        >
+          <Radio.Group
+            options={glazeOptions}
+            onChange={(e) => handleRadioChange('glaze', e)}
+            optionType='button'
+            buttonStyle='solid'
+          />
+        </Form.Item>
+        <Form.Item
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 12 }}
+          label='品类'
+          name='type'
+        >
+          <Radio.Group
+            options={typeOptions}
+            onChange={(e) => handleRadioChange('type', e)}
+            optionType='button'
+            buttonStyle='solid'
+          />
+        </Form.Item>
+        <Form.Item
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 12 }}
+          label='系列'
+          name='series'
+        >
+          <Radio.Group
+            options={seriesOptions}
+            onChange={(e) => handleRadioChange('series', e)}
+            optionType='button'
+            buttonStyle='solid'
+          />
+        </Form.Item>
+        <Form.Item
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 12 }}
+          label='尺寸'
+          name='size'
+        >
+          <Radio.Group
+            options={sizeOptions}
+            onChange={(e) => handleRadioChange('size', e)}
+            optionType='button'
+            buttonStyle='solid'
+          />
+        </Form.Item>
+        <Form.Item
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 12 }}
+          label='备注'
+          name='remark'
+        >
+          <Input.TextArea placeholder='请输入备注' />
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };
