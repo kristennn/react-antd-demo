@@ -2,11 +2,11 @@
  * @Author: kristennn 13949836783@163.com
  * @Date: 2022-07-05 17:00:00
  * @LastEditors: kristennn 13949836783@163.com
- * @LastEditTime: 2022-07-05 17:09:46
+ * @LastEditTime: 2022-07-13 15:28:29
  * @FilePath: /demo/src/pages/category/table.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { Button, Space, Table } from 'antd';
+import { Button, Popconfirm, Space, Table } from 'antd';
 
 import { Category } from '../../api/category';
 import { ColumnsType } from 'antd/lib/table';
@@ -71,9 +71,14 @@ const categoryTable = (props: CategoryTableProps) => {
           <Button onClick={() => handleGenerate(record)} type='primary'>
             生成产品
           </Button>
-          <Button onClick={() => handleDelete(record)} danger type='primary'>
-            删除
-          </Button>
+          <Popconfirm
+            title='确定要删除吗?'
+            onConfirm={() => handleDelete(record)}
+          >
+            <Button danger type='primary'>
+              删除
+            </Button>
+          </Popconfirm>
         </Space>
       ),
     },

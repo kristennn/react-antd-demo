@@ -1,3 +1,5 @@
+import { Category as CategoryType, deleteCategory } from '../../api/category';
+
 /*
  * @Author: KristenZheng kristen@electracharger.com
  * @Date: 2022-06-29 17:08:01
@@ -9,7 +11,6 @@
 import { Button } from 'antd';
 import CategoryForm from './form';
 import CategoryTable from './table';
-import { Category as CategoryType } from '../../api/category';
 import { useState } from 'react';
 
 const Category = () => {
@@ -30,7 +31,9 @@ const Category = () => {
     setIsModalVisible(true);
     console.log('open');
   };
-  const handleDelete = (item: CategoryType) => {};
+  const handleDelete = (item: CategoryType) => {
+    deleteCategory(item);
+  };
   const handleGenerate = (item: CategoryType) => {};
 
   return (
