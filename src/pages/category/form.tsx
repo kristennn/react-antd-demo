@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
  */
 
 type CategoryFormProps = {
-  id: number | undefined | null;
+  id: number;
   isVisible: boolean;
   handleSubmitted: () => void;
   handleCanceled: () => void;
