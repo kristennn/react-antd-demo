@@ -2,7 +2,7 @@
  * @Author: KristenZheng kristen@electracharger.com
  * @Date: 2022-06-29 17:08:01
  * @LastEditors: kristennn 13949836783@163.com
- * @LastEditTime: 2022-07-06 16:21:56
+ * @LastEditTime: 2022-07-13 15:23:42
  * @FilePath: /demo/src/pages/dashboard/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -21,7 +21,7 @@ const Category = () => {
   const handleSubmitted = () => {
     setIsModalVisible(false);
   };
-  const handleCancel = () => {
+  const handleCanceled = () => {
     setIsModalVisible(false);
   };
   const handleEdit = (item: CategoryType) => {
@@ -46,7 +46,7 @@ const Category = () => {
       <CategoryForm
         isVisible={isModalVisible}
         handleSubmitted={handleSubmitted}
-        handleCancel={handleCancel}
+        handleCanceled={handleCanceled}
         id={currId}
       />
     </div>

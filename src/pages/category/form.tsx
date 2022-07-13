@@ -26,11 +26,11 @@ type CategoryFormProps = {
   id: number | undefined | null;
   isVisible: boolean;
   handleSubmitted: () => void;
-  handleCancel: () => void;
+  handleCanceled: () => void;
 };
 
 const CategoryForm = (props: CategoryFormProps) => {
-  const { id, isVisible, handleSubmitted, handleCancel } = props;
+  const { id, isVisible, handleSubmitted, handleCanceled } = props;
   const [initialFormValues, setInitialFormValues] = useState<{} | Category>({});
   const [form] = Form.useForm();
   useEffect(() => {
@@ -40,13 +40,18 @@ const CategoryForm = (props: CategoryFormProps) => {
         // setInitialFormValues(res.data);
       });
     }
-  }, []);
+  }, [id]);
 
   const handleSubmit = () => {
     form.validateFields().then((values) => {
-      id ? updateCategory(values) : createCategory(values);
+      id ? updateCategory({ ...values, id }) : createCategory(values);
+      form.resetFields();
     });
     // handleSubmitted();
+  };
+  const handleCancel = () => {
+    form.resetFields();
+    handleCanceled();
   };
   const handleRadioChange = (label: string, e: RadioChangeEvent) => {
     const formData = form.getFieldsValue();
