@@ -13,6 +13,8 @@ export type Product = {
   categoryId: number;
   code: string;
   url: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export const fetchProducts = async (): Promise<Product[]> => {
